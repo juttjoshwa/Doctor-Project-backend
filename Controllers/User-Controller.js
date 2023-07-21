@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const ExpressAsyc = require("express-async-handler");
 const UserSchema = require("../model/UserSchema.js");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const CODE_JWT = "juttjoshwa"
 
