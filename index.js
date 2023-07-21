@@ -24,16 +24,14 @@ app.use(
 app.use(cookieParser);
 app.use(bodyParser);
 
-const Port = 4000;
-
-const server = app.listen(process.env.PORT, () => {
-  console.log(`server is working on http://localhost:${Port}/`);
-});
-
-DB_connect();
-
 app.get("/", async (req, res) => {
   res.send("server is working");
 });
 
 app.use("/api/auth", userRouter);
+
+app.listen(process.env.PORT, () => {
+  console.log(`server is working on http://localhost:${process.env.PORT}/`);
+});
+
+DB_connect();
