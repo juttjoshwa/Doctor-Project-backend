@@ -2,9 +2,11 @@ const jwt = require("jsonwebtoken");
 const express = require("express");
 const { Register, Login, Logout, getMyDetails } = require("../Controllers/User-Controller");
 
+const CODE_JWT = "juttjoshwa"
+
 const requireAuth = async (req, res, next) => {
   const token = req.cookies.token;
-  const secretToken = process.env.CODE_JWT || "juttjoshwa@gmail.com";
+  const secretToken = CODE_JWT
 
   if (!token) {
     return res

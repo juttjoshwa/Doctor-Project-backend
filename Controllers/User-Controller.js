@@ -3,12 +3,14 @@ const ExpressAsyc = require("express-async-handler");
 const UserSchema = require("../model/UserSchema.js");
 const bcrypt = require("bcrypt");
 
+const CODE_JWT = "juttjoshwa"
+
 const sendingToken = (statusCode, user, res) => {
   const tokenForAuth = jwt.sign(
     {
       id: user.id,
     },
-    process.env.CODE_JWT,
+    CODE_JWT,
     {
       expiresIn: "1d",
     }
