@@ -20,7 +20,6 @@ const sendingToken = (statusCode, user, res) => {
   const options = {
     expires: new Date(Date.now() + expires * 24 * 60 * 60 * 1000),
     httpOnly: true,
-    sameSite: "None",
     secure: true,
   };
   res.status(statusCode).cookie("token", tokenForAuth, options).json({
