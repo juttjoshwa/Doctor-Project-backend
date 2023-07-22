@@ -3,7 +3,7 @@ const ExpressAsyc = require("express-async-handler");
 const UserSchema = require("../model/UserSchema.js");
 const bcrypt = require("bcryptjs");
 
-const CODE_JWT = "juttjoshwa"
+const CODE_JWT = "juttjoshwa";
 
 const sendingToken = (statusCode, user, res) => {
   const tokenForAuth = jwt.sign(
@@ -20,6 +20,8 @@ const sendingToken = (statusCode, user, res) => {
   const options = {
     expires: new Date(Date.now() + expires * 24 * 60 * 60 * 1000),
     httpOnly: true,
+    sameSite: "None",
+    secure: true,
   };
   res.status(statusCode).cookie("token", tokenForAuth, options).json({
     success: true,
@@ -100,31 +102,30 @@ exports.Login = ExpressAsyc(async (req, res) => {
 });
 
 exports.Logout = ExpressAsyc(async (req, res) => {
-    res.cookie("token", null, {
-      expires: new Date(Date.now()),
-      httpOnly: true,
-    });
-  
+  res.cookie("token", null, {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Logged Out",
+  });
+});
+
+exports.getMyDetails = ExpressAsyc(async (req, res, next) => {
+  try {
+    const user = await UserSchema.findById(req.user.id).select("-password");
+    const newUser = user;
+
     res.status(200).json({
       success: true,
-      message: "Logged Out",
+      newUser,
     });
-  });
-
-
-  exports.getMyDetails = ExpressAsyc(async (req, res, next) => {
-    try {
-      const user = await UserSchema.findById(req.user.id).select("-password");
-      const newUser = user;
-  
-      res.status(200).json({
-        success: true,
-        newUser,
-      });
-    } catch (error) {
-      return res.status(400).json({
-        success: false,
-        message: error.message,
-      });
-    }
-  });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
