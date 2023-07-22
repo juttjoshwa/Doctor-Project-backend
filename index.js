@@ -21,8 +21,8 @@ app.use(
   })
 );
 
-app.use(cookieParser);
-app.use(bodyParser);
+app.use(cookieParser());
+app.use(bodyParser());
 
 app.get("/", async (req, res) => {
   res.send("server is working");
