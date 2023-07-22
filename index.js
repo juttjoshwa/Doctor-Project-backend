@@ -6,13 +6,12 @@ const body = require("body-parser");
 const DB_connect = require("./DataBase/Db");
 const userRouter = require("./Routes/UserRoute");
 
-const cookieParser = cookie();
-const bodyParser = body();
-
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookie());
+app.use(body());
 
 app.use(
   cors({
@@ -20,9 +19,6 @@ app.use(
     credentials: true,
   })
 );
-
-app.use(cookieParser());
-app.use(bodyParser());
 
 app.get("/", async (req, res) => {
   res.send("server is working");
